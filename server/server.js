@@ -4,8 +4,8 @@ import { authRouter } from "./routes/auth.route.js";
 import connectMongo from "./utils/connectMongo.js";
 
 const app = express();
-const PORT = process.env.PORT || 3001;
 dotenv.config();
+const PORT = process.env.PORT || 3001;
 
 app.use(express.json());
 app.use("/api/auth", authRouter);
