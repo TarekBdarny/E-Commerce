@@ -13,9 +13,11 @@ export const register = async (req, res) => {
     gender,
     profilePic,
   } = req.body;
+  console.log("test");
   try {
-    const user = await userModel.findOne({ email });
-    if (user) return res.status(400).json({ message: "Email already exists" });
+    const user = await userModel.findOne({ username });
+    if (user)
+      return res.status(400).json({ message: "username already exists" });
 
     if (password !== confirmPassword)
       return res.status(400).json({ message: "Passwords do not match" });
@@ -37,7 +39,7 @@ export const register = async (req, res) => {
       await newUser.save();
     }
     const userWithoutPassword = { ...newUser, password: "" };
-    res.status(201).json(newUser);
+    res.status(201).json(userWithoutPassword);
   } catch (error) {
     res.status(500).json({ message: error.message });
     console.log("Error in register controller", error.message);
@@ -45,10 +47,10 @@ export const register = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-  const { email, password } = req.body;
+  const { username, password } = req.body;
   try {
-    const user = await userModel.findOne({ email });
-    if (!user) return res.status(400).json({ message: "Invalid Email." });
+    const user = await userModel.findOne({ username });
+    if (!user) return res.status(400).json({ message: "Invalid username" });
     const isMatch = await bcrypt.compare(password, user?.password || "");
     if (!isMatch) return res.status(400).json({ message: "Invalid Password." });
 

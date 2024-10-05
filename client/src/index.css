@@ -7,3 +7,24 @@
     margin: 0;
     box-sizing: border-box;
 }
+body{
+    font-family: "Poppins", sans-serif;
+
+}
+input[type="text"]:focus ~ .input-text,
+input[type="number"]:focus ~ .input-text,
+input[type="password"]:focus ~ .input-text
+{
+ @apply text-primary  transform -translate-y-8 -translate-x-4  scale-75 z-10;
+}
+
+.input{
+    @apply  w-48 md:w-72 rounded-md p-2 h-16  bg-transparent outline-none bg-accent border-black border-opacity-50 border-2 focus:border-primary  focus:text-black transition duration-200 text-xl;
+}
+
+.input-label{
+    @apply absolute  text-sm md:text-2xl mx-4 text-black left-0 top-6 md:top-4 px-2 cursor-pointer  transition bg-accent duration-200 input-text text-opacity-80 ;
+}
+.test-class{
+   @apply   transform -translate-y-8 -translate-x-4  scale-75 z-10;
+}
