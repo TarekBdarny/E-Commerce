@@ -27,9 +27,6 @@ const userSchema = new mongoose.Schema(
       required: true,
       enum: ["male", "female"],
     },
-    profilePic: {
-      type: String,
-    },
     businessAccount: {
       type: Boolean,
       default: false,
@@ -48,6 +45,36 @@ const userSchema = new mongoose.Schema(
         ref: "Product",
       },
     ],
+    browsedProducts: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product",
+      },
+    ],
+
+    profilePic: {
+      type: String,
+    },
+    country: {
+      type: String,
+      default: "",
+    },
+    street: {
+      type: String,
+      default: "",
+    },
+    building: {
+      type: String,
+      default: "",
+    },
+    city: {
+      type: String,
+      default: "",
+    },
+    apartmentNumber: {
+      type: String,
+      default: "",
+    },
   },
   { timestamps: true }
 );
