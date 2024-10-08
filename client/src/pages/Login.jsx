@@ -30,7 +30,7 @@ const Login = () => {
     login();
   };
   return (
-    <div className="w-screen md:w-[700px] h-[500px]  px-8 py-4 flex flex-col md:flex-row justify-between md: items-center rounded-xl mt-4 ">
+    <div className="w-screen md:w-[700px] h-[450px] border-2 px-8 py-4 flex flex-col md:flex-row justify-between md: items-center rounded-xl mt-4 shadow-lg ">
       {/* content */}
       <div className="flex flex-col justify-between p-3 ">
         <div>

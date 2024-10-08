@@ -2,7 +2,7 @@ import React from "react";
 
 const NavCategory = () => {
   return (
-    <div className="dropdown">
+    <div className="dropdown hidden lg:block">
       <div tabIndex={0} role="button" className="btn m-1">
         Categories
       </div>

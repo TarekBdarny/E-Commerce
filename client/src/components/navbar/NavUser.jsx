@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { CiSettings, CiUser, CiLogout } from "react-icons/ci";
-import { motion } from "framer-motion";
+import { AnimatePresence, delay, motion } from "framer-motion";
+import MenuItem from "./MenuItem";
 const staggerVariants = {
   initial: {
     opacity: 0,
     y: -100,
+    transition: {
+      delay: 1,
+    },
   },
   visible: {
     opacity: 1,
@@ -13,6 +17,16 @@ const staggerVariants = {
     transition: {
       staggerChildren: 0.2,
       delayChildren: 0.2,
+    },
+  },
+  exit: {
+    opacity: 0,
+    y: -100,
+    transition: {
+      staggerChildren: 0.2,
+      delayChildren: 0.2,
+      staggerDirection: -1,
+      delay: 0.5,
     },
   },
 };
@@ -26,60 +40,29 @@ const itemVariants = {
     y: 0,
   },
 };
+const items = [
+  {
+    text: "Profile",
+    to: "/settings/profile",
+    icon: <CiUser />,
+  },
+  {
+    text: "Settings",
+    to: "/settings",
+    icon: <CiSettings />,
+  },
+  {
+    text: "Logout",
+    to: "/logout",
+    icon: <CiLogout />,
+  },
+];
 const NavUser = () => {
   const [isOpen, setIsOpen] = useState(false);
+  useEffect(() => {
+    console.log(isOpen);
+  }, [isOpen]);
   return (
-    // <div className="flex-none gap-2 px-4">
-    //   <div className="dropdown dropdown-end" onClick={() => setIsOpen(!isOpen)}>
-    //     <div
-    //       tabIndex={0}
-    //       role="button"
-    //       className="btn btn-ghost btn-circle avatar"
-    //     >
-    //       <div className="w-10 rounded-full">
-    //         <img
-    //           alt="profile picture"
-    //           src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-    //         />
-    //       </div>
-    //     </div>
-    //     {isOpen && (
-    //       <motion.ul
-    //         tabIndex={0}
-    //         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
-    //         variants={staggerVariants}
-    //         initial="initial"
-    //         animate="visible"
-    //         exit={"initial"}
-    //       >
-    //         <motion.li variants={itemVariants} whileTap={{ scale: 0.95 }}>
-    //           <Link>
-    //             {" "}
-    //             hello <span className="text-primary">User </span>
-    //           </Link>
-    //         </motion.li>
-    //         <motion.li variants={itemVariants} whileTap={{ scale: 0.95 }}>
-    //           <Link className="">
-    //             <CiUser />
-    //             Profile
-    //           </Link>
-    //         </motion.li>
-    //         <motion.li variants={itemVariants} whileTap={{ scale: 0.95 }}>
-    //           <Link>
-    //             <CiSettings />
-    //             Settings
-    //           </Link>
-    //         </motion.li>
-    //         <motion.li variants={itemVariants} whileTap={{ scale: 0.95 }}>
-    //           <Link>
-    //             <CiLogout />
-    //             Logout
-    //           </Link>
-    //         </motion.li>
-    //       </motion.ul>
-    //     )}
-    //   </div>
-    // </div>
     <details
       className="dropdown dropdown-end"
       onClick={() => setIsOpen(!isOpen)}
@@ -87,46 +70,36 @@ const NavUser = () => {
       <summary className="btn btn-ghost btn-circle avatar">
         <div className="w-10 rounded-full">
           <img
-            alt="Tailwind CSS Navbar component"
+            alt="user profile"
             src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
           />
         </div>
       </summary>
-      {isOpen && (
+
+      {/* {isOpen && ( */}
+      <AnimatePresence>
         <motion.ul
-          tabIndex={0}
+          // tabIndex={0}
           className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
           variants={staggerVariants}
-          initial="initial"
-          animate="visible"
-          exit={"initial"}
+          initial={false}
+          animate={isOpen ? "visible" : "initial"}
+          exit={"exit"}
         >
-          <motion.li variants={itemVariants} whileTap={{ scale: 0.95 }}>
-            <Link>
-              {" "}
-              hello <span className="text-primary">User </span>
+          <motion.li
+            variants={itemVariants}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Link to="/profile">
+              Hello <span className="text-primary-hover">Tarek</span>
             </Link>
           </motion.li>
-          <motion.li variants={itemVariants} whileTap={{ scale: 0.95 }}>
-            <Link className="">
-              <CiUser />
-              Profile
-            </Link>
-          </motion.li>
-          <motion.li variants={itemVariants} whileTap={{ scale: 0.95 }}>
-            <Link>
-              <CiSettings />
-              Settings
-            </Link>
-          </motion.li>
-          <motion.li variants={itemVariants} whileTap={{ scale: 0.95 }}>
-            <Link>
-              <CiLogout />
-              Logout
-            </Link>
-          </motion.li>
+
+          <MenuItem menuItems={items} userMenu={true} />
         </motion.ul>
-      )}
+      </AnimatePresence>
+      {/* )} */}
     </details>
   );
 };

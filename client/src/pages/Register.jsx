@@ -437,7 +437,7 @@ const RegisterProgressCount = ({ activeSection, dataError }) => {
       <div className="w-full h-full flex flex-row items-center justify-between z-[10000] absolute">
         {sections.map((section) => (
           <div
-            className={`w-[50px] h-[50px] flex justify-center items-center ${
+            className={`w-[50px] h-[50px] flex justify-center items-center text-black ${
               dataError && section === activeSection
                 ? "bg-[#e11d48] size-[55px]"
                 : section > activeSection

@@ -32,7 +32,7 @@ const NavCurrency = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <details className="dropdown hidden md:block">
+    <details className="dropdown hidden lg:block">
       <summary className="btn m-1" onClick={() => setIsOpen(!isOpen)}>
         Currency
         <MdCurrencyExchange />
