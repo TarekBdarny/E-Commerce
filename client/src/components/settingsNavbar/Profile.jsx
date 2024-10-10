@@ -46,19 +46,30 @@ export const Profile = () => {
     updateProfile();
     // console.log(data);
   };
+  const handleImageChange = (e) => {
+    var reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = () => {
+      setData((prev) => ({ ...prev, profilePic: reader.result }));
+    };
+    reader.onerror = (error) => {
+      console.log("Error: ", error);
+    };
+  };
   return (
     <section className="flex flex-col gap-6 mx-10 md:mx-5">
       <h1>Change Details</h1>
-      <div className="flex flex-col gap-4 items-center">
+      <div className="flex flex-col gap-4 items-center w-48 md:w-72">
         <div className="avatar">
-          <div className="w-24 rounded-full border shadow-md">
+          <div className="w-32 rounded-full border shadow-md">
             <img src={data.profilePic} className="" />
           </div>
         </div>
         <input
           type="file"
           accept="image/*"
-          className="file-input file-input-bordered w-full max-w-xs"
+          className="file-input file-input-bordered w-full file-input-xs md:file-input-md "
+          onChange={handleImageChange}
         />
       </div>
       <Inputs
@@ -74,7 +85,7 @@ export const Profile = () => {
 const Inputs = ({ data, setData, loading, handleSubmit }) => {
   return (
     <form
-      className="grid grid-cols-1 md:grid-cols-2 gap-5 w-full place-content-center h-full "
+      className="grid grid-cols-1 gap-5 w-full place-content-center h-full "
       onSubmit={handleSubmit}
     >
       <label className="relative">
@@ -134,7 +145,7 @@ const Inputs = ({ data, setData, loading, handleSubmit }) => {
 const ButtonContainer = ({ handleSubmit, loading }) => {
   return (
     <button
-      className="btn w-28 bg-primary hover:bg-primary-hover transition duration-200 text-white"
+      className="btn w-48 md:w-72 bg-primary hover:bg-primary-hover transition duration-200 text-white"
       onClick={handleSubmit}
     >
       {loading ? <LoadingSpinner /> : "Save"}

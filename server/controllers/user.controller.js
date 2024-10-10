@@ -9,6 +9,8 @@ export const updateCountry = async (req, res) => {
     }
     user.country = country;
     user.flag = flag;
+    user.city = "";
+
     await user.save();
     res.status(200).json({
       message: "User updated successfully",

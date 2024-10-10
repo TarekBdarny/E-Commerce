@@ -1,8 +1,13 @@
 import React from "react";
+import { useUserContext } from "../context/UserContext";
 
 const Modal = ({ func, country = false }) => {
+  const { user, setUser } = useUserContext();
+
   const handleClick = () => {
     func();
+    // setUser({ ...user, city: "" });
+    // window.localStorage.setItem("user", JSON.stringify({ ...user, city: "" }));
     document.getElementById("my_modal_3").close();
   };
   return (

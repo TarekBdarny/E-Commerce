@@ -24,18 +24,19 @@ export const Address = () => {
   );
 
   const handleClick = (e) => {
+    e.preventDefault();
+
     if (!data.street || !data.city || !data.building || !data.apartmentNumber) {
       toast.error("Please fill all the fields");
       return;
     }
     updateAddress();
-    e.preventDefault();
   };
   useEffect(() => {
     setCountryCities(cities.getByCountry(getCode(user?.country)) || "");
   }, [user]);
   return (
-    <div className="flex flex-col gap-8 mt-10 flex-wrap">
+    <div className="flex flex-col gap-8 mt-10 flex-wrap mx-2">
       <form className="grid grid-cols-1 gap-5" onSubmit={handleClick}>
         {/* TODO: cities dropdown */}
         <CitiesDropDown
@@ -56,7 +57,7 @@ export const Address = () => {
 };
 
 const Inputs = (props) => {
-  const { data, setData, loading, handleSubmit } = props;
+  const { data, setData } = props;
 
   return (
     <>
@@ -120,10 +121,13 @@ const CitiesDropDown = ({ data, handleChange }) => {
   return (
     <>
       <select
-        className="select select-bordered text-xl w-full h-16 border-black border-2 border-opacity-50 outline-none max-w-xs"
+        className="select select-bordered md:text-xl w-48 md:w-72 h-16 border-black border-2 border-opacity-50 outline-none max-w-xs relative"
         onChange={handleChange}
-        defaultValue={user?.city ? user?.city : "Select Your City"}
+        defaultValue={user?.city !== "" ? user?.city : "Select You'r City"}
       >
+        <option disabled>
+          {user?.city !== "" ? user?.city : "Select You'r City"}
+        </option>
         {data?.map((city, index) => (
           <option key={index} value={city.name}>
             {city.name}
@@ -134,31 +138,10 @@ const CitiesDropDown = ({ data, handleChange }) => {
   );
 };
 
-const SearchInput = ({ setInputValue }) => {
-  return (
-    <label className="relative z-30">
-      <input
-        type="text"
-        className="border w-full mt-2 rounded-lg p-2 px-8 outline-none"
-        id="search-city-input"
-        placeholder="Enter Country Name"
-        autoComplete="off"
-        onChange={(e) => setInputValue(e.target.value)}
-      />
-      <label
-        htmlFor="search-city-input"
-        className=" absolute top-1 left-0 mx-2 text-lg "
-      >
-        <CiSearch />
-      </label>
-    </label>
-  );
-};
-
 const Button = ({ handleClick, loading }) => {
   return (
     <button
-      className="btn bg-primary hover:bg-primary-hover transition duration-200 text-white"
+      className="btn bg-primary hover:bg-primary-hover transition duration-200 text-white w-full"
       type="submit"
       onClick={handleClick}
     >
