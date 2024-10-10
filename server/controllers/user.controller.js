@@ -67,3 +67,27 @@ export const updateProfile = async (req, res) => {
     console.log("Error in update profile controller", error.message);
   }
 };
+
+export const updateAddress = async (req, res) => {
+  try {
+    const { username } = req.params;
+    const { city, street, building, apartmentNumber } = req.body;
+
+    const user = await userModel.findOne({ username });
+    console.log(username);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    user.city = city;
+    user.street = street;
+    user.building = building;
+    user.apartmentNumber = apartmentNumber;
+    await user.save();
+    res.status(200).json({
+      message: "Address updated successfully",
+      data: user,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Something went wrong" });
+    console.log("error in updateAddress controller", error.message);
+  }
+};

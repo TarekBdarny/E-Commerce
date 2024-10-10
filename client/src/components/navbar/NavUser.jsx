@@ -61,9 +61,7 @@ const items = [
 const NavUser = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useUserContext();
-  useEffect(() => {
-    console.log(isOpen);
-  }, [isOpen]);
+
   return (
     <details
       className="dropdown dropdown-end"
