@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { CiSettings, CiUser, CiLogout } from "react-icons/ci";
 import { AnimatePresence, delay, motion } from "framer-motion";
 import MenuItem from "./MenuItem";
+import { useUserContext } from "../../context/UserContext";
 const staggerVariants = {
   initial: {
     opacity: 0,
@@ -59,6 +60,7 @@ const items = [
 ];
 const NavUser = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { user } = useUserContext();
   useEffect(() => {
     console.log(isOpen);
   }, [isOpen]);
@@ -71,7 +73,7 @@ const NavUser = () => {
         <div className="w-10 rounded-full">
           <img
             alt="user profile"
-            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+            src={user?.profilePic || "https://i.pravatar.cc/300"}
           />
         </div>
       </summary>

@@ -16,9 +16,13 @@ import {
   Payment,
   BusinessAccount,
 } from "./components/settingsNavbar/export";
+import { useEffect } from "react";
+import { useUserContext } from "./context/UserContext";
 function App() {
+  const { user } = useUserContext();
+  useEffect(() => {}, [user]);
   return (
-    <div className="flex flex-col h-screen items-center  ">
+    <div className="">
       <TestNav />
       <Routes>
         <Route path="/" element={<Home />} />

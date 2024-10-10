@@ -39,6 +39,10 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    currency: {
+      type: String,
+      default: "USD",
+    },
     likedProducts: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -56,6 +60,10 @@ const userSchema = new mongoose.Schema(
       type: String,
     },
     country: {
+      type: String,
+      default: "",
+    },
+    flag: {
       type: String,
       default: "",
     },

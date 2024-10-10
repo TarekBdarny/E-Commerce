@@ -114,97 +114,99 @@ const RegisterPage = () => {
     register();
   };
   return (
-    <div className="w-screen py-12 md:w-[600px] lg:w-[800px] h-screen overflow-hidden   md:h-[530px]  bg-accent flex flex-col items-center justify-start md:justify-evenly rounded-2xl relative mt-4 shadow-lg">
-      <RegisterProgressCount
-        activeSection={activeSection}
-        dataError={dataError}
-      />
+    <div className="flex  justify-center">
+      <div className="w-screen py-12 md:w-[600px] lg:w-[800px] h-screen overflow-hidden   md:h-[500px]  bg-accent flex flex-col items-center justify-start md:justify-evenly rounded-2xl relative mt-4 shadow-lg">
+        <RegisterProgressCount
+          activeSection={activeSection}
+          dataError={dataError}
+        />
 
-      {activeSection === 1 ? (
-        <RegisterTemplate
-          heading={"Basic Credentials."}
-          content={"Enter First Name, Last Name & username."}
-        >
-          <Register1 setData={setData} data={data} />
-        </RegisterTemplate>
-      ) : activeSection === 2 ? (
-        <RegisterTemplate
-          heading={"More Details."}
-          content={"Enter Email, Age & Gender"}
-        >
-          <Register2 setData={setData} data={data} />
-        </RegisterTemplate>
-      ) : activeSection === 3 ? (
-        <RegisterTemplate
-          heading={"Password Details."}
-          content={"Enter Password & And Confirm it. "}
-        >
-          <Register3 setData={setData} data={data} />
-        </RegisterTemplate>
-      ) : (
-        <RegisterTemplate
-          heading={"Appearance."}
-          content={"Upload Profile Picture"}
-        >
-          <Register4 setData={setData} data={data} />
-        </RegisterTemplate>
-      )}
-      <div className="flex flex-row items-center justify-between mx-20 md:mx-4 md:my-0 w-[calc(100%-40px)] absolute bottom-3 p-5 md:px-2">
-        <button
-          disabled={activeSection === 1}
-          className={`btn border-2 border-disabled text-text-color bg-accent hover:translate-y-[-3px] hover:bg-primary hover:text-accent rounded-lg transition duration-200`}
-          onClick={() => navigateSectionAndValidate("prev")}
-        >
-          {activeSection !== 1 && (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="size-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18"
-              />
-            </svg>
-          )}
-          Previous
-        </button>
-        <button
-          className="btn border-2 text-text-color bg-primary hover:translate-y-[-3px] hover:bg-primary-hover  transition duration-200 rounded-lg"
-          onClick={
-            activeSection !== 4
-              ? () => navigateSectionAndValidate("next")
-              : () => handleRegister()
-          }
-        >
-          {activeSection === 4 ? (
-            "Register"
-          ) : !loading ? (
-            "Next"
-          ) : (
-            <LoadingSpinner />
-          )}
-          {activeSection !== 4 && (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="size-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
-              />
-            </svg>
-          )}
-        </button>
+        {activeSection === 1 ? (
+          <RegisterTemplate
+            heading={"Basic Credentials."}
+            content={"Enter First Name, Last Name & username."}
+          >
+            <Register1 setData={setData} data={data} />
+          </RegisterTemplate>
+        ) : activeSection === 2 ? (
+          <RegisterTemplate
+            heading={"More Details."}
+            content={"Enter Email, Age & Gender"}
+          >
+            <Register2 setData={setData} data={data} />
+          </RegisterTemplate>
+        ) : activeSection === 3 ? (
+          <RegisterTemplate
+            heading={"Password Details."}
+            content={"Enter Password & And Confirm it. "}
+          >
+            <Register3 setData={setData} data={data} />
+          </RegisterTemplate>
+        ) : (
+          <RegisterTemplate
+            heading={"Appearance."}
+            content={"Upload Profile Picture"}
+          >
+            <Register4 setData={setData} data={data} />
+          </RegisterTemplate>
+        )}
+        <div className="flex flex-row items-center justify-between mx-20 md:mx-4 md:my-0 w-[calc(100%-40px)] absolute bottom-3 p-5 md:px-2">
+          <button
+            disabled={activeSection === 1}
+            className={`btn border-2 border-disabled text-text-color bg-accent hover:translate-y-[-3px] hover:bg-primary hover:text-accent rounded-lg transition duration-200`}
+            onClick={() => navigateSectionAndValidate("prev")}
+          >
+            {activeSection !== 1 && (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18"
+                />
+              </svg>
+            )}
+            Previous
+          </button>
+          <button
+            className="btn border-2 text-text-color bg-primary hover:translate-y-[-3px] hover:bg-primary-hover  transition duration-200 rounded-lg"
+            onClick={
+              activeSection !== 4
+                ? () => navigateSectionAndValidate("next")
+                : () => handleRegister()
+            }
+          >
+            {activeSection === 4 ? (
+              "Register"
+            ) : !loading ? (
+              "Next"
+            ) : (
+              <LoadingSpinner />
+            )}
+            {activeSection !== 4 && (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
+                />
+              </svg>
+            )}
+          </button>
+        </div>
       </div>
     </div>
   );

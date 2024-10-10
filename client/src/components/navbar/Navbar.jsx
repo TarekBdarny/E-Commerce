@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useUserContext } from "../../context/UserContext";
 import { Link } from "react-router-dom";
-import NavCurrency from "./NavCurrency";
 import NavUser from "./NavUser";
 import NavCategory from "./NavCategory";
 import NavInput from "./NavInput";
@@ -17,7 +16,6 @@ export const TestNav = () => {
         <Link to={"/"} className="btn btn-ghost text-xl flex md:hidden">
           TE
         </Link>
-        <NavCurrency />
         <NavCategory />
         <NavInput />
       </div>
