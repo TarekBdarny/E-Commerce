@@ -18,6 +18,7 @@ import {
 } from "./components/settingsNavbar/export";
 import { useEffect } from "react";
 import { useUserContext } from "./context/UserContext";
+
 function App() {
   const { user } = useUserContext();
   useEffect(() => {}, [user]);
