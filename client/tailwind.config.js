@@ -15,9 +15,15 @@ export default {
         "main-bg": "#e7e5e4", //v
         accent: "#fafaf9",
       },
+      backgroundImage: {
+        "credit-cart-front": "url('/bg-card-back.png')",
+        "credit-cart-back": "url('/img/bg-card-front.png')",
+        "main-desktop": "url('/img/bg-main-desktop.png')",
+        "main-mobile": "url('/img/bg-main-mobile.png')",
+      },
     },
   },
-  plugins: [daisyui],
+  plugins: [daisyui, "prettier-plugin-tailwindcss"],
   daisyui: {
     themes: false,
   },

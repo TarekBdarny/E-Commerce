@@ -51,7 +51,7 @@ const Settings = () => {
     },
   ];
   return (
-    <div className="flex md:gap-24 h-screen">
+    <div className="flex gap-4 h-screen">
       <nav className="w-[200px] md:w-[300px] h-screen  bg-base-200 py-4 ">
         <motion.ul className="w-full flex flex-col gap-2 menu mt-12">
           <MenuItem menuItems={menuItems} setting={true} />

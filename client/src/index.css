@@ -17,7 +17,7 @@ input[type="text"]:focus ~ .input-text,
 input[type="number"]:focus ~ .input-text,
 input[type="password"]:focus ~ .input-text
 {
- @apply text-primary  transform -translate-y-8 -translate-x-4  scale-75 z-10;
+ @apply text-primary  transform -translate-y-8 -translate-x-4  scale-75 z-10 transition duration-200;
 }
 
 

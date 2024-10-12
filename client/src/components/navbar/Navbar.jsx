@@ -8,7 +8,7 @@ import MobileMenu from "./MobileMenu";
 
 export const TestNav = () => {
   return (
-    <div className="navbar bg-base-100 border-b-2 px-5 md:px-6 sticky top-0 z-20 ">
+    <div className="navbar bg-base-100 w-[500px]md:w-screen  border-b-2 px-5 md:px-6 sticky top-0 z-20 ">
       <div className="flex-1">
         <Link to={"/"} className="btn btn-ghost text-xl hidden md:flex">
           Tarek Express

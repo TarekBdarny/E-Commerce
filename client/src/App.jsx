@@ -32,6 +32,7 @@ function App() {
         <Route path="/register" element={<MainRegister />} />
         <Route path="/login" element={<Login />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/main/create/payment" element={<Payment />} />
         <Route path="/settings" element={<Settings />}>
           <Route path="wishlist" element={<Wishlist />} />
           <Route path="address" element={<Address />} />
