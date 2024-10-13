@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import { useUserContext } from "../context/UserContext";
+import { useUserContext } from "../../context/UserContext";
 function useRegister(userData) {
   const [loading, setLoading] = useState(false);
   const { setUser } = useUserContext();

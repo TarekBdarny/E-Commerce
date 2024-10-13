@@ -7,7 +7,7 @@ import { useCountries } from "use-react-countries";
 import { useUserContext } from "../../context/UserContext";
 import countryToCurrency from "country-to-currency";
 import { getCode } from "country-list";
-import useUpdateCurrency from "../../hooks/useUpdateCurrency";
+import useUpdateCurrency from "../../hooks/user/useUpdateCurrency";
 
 const staggerVariants = {
   initial: {
@@ -45,7 +45,7 @@ const NavCurrency = () => {
     const filterCountries = () => {
       let tempName = "";
       const validCountry = countries.map((country) =>
-        country.name === user?.country ? true : false
+        country.name === user?.country ? true : false,
       );
       if (user?.country !== "" && validCountry) {
         tempName = user?.country;
@@ -56,8 +56,8 @@ const NavCurrency = () => {
             (country.name === tempName && tempName !== "") ||
             country.name === "United States" ||
             country.name === "United Kingdom" ||
-            (country.name === "Canada" && country)
-        )
+            (country.name === "Canada" && country),
+        ),
       );
       console.log(wantedCountries);
     };
@@ -68,19 +68,19 @@ const NavCurrency = () => {
     let data = [];
     if (currency === "USD") {
       data = wantedCountries.filter(
-        (country) => country.name === "United States" && country
+        (country) => country.name === "United States" && country,
       );
     } else if (currency === "GBP") {
       data = wantedCountries.filter(
-        (country) => country.name === "United Kingdom" && country
+        (country) => country.name === "United Kingdom" && country,
       );
     } else if (currency === "CAD") {
       data = wantedCountries.filter(
-        (country) => country.name === "Canada" && country
+        (country) => country.name === "Canada" && country,
       );
     } else {
       data = wantedCountries.filter(
-        (country) => country.name === user?.country && country
+        (country) => country.name === user?.country && country,
       );
     }
     return data;
@@ -132,8 +132,8 @@ const Item = (props) => {
     name === "United States"
       ? "United States of America"
       : name === "United Kingdom"
-      ? "United Kingdom of Great Britain and Northern Ireland"
-      : name;
+        ? "United Kingdom of Great Britain and Northern Ireland"
+        : name;
 
   let validCurrency =
     countryToCurrency[getCode(tempName === undefined ? "" : tempName)];

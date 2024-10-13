@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import useRegister from "../hooks/useRegister";
+import useRegister from "../hooks/auth/useRegister";
 import toast from "react-hot-toast";
 import { FaArrowTrendUp } from "react-icons/fa6";
 
@@ -443,10 +443,10 @@ const RegisterProgressCount = ({ activeSection, dataError }) => {
               dataError && section === activeSection
                 ? "bg-[#e11d48] size-[55px]"
                 : section > activeSection
-                ? "bg-slate-400"
-                : section === activeSection
-                ? "bg-primary"
-                : "bg-[#34d399]"
+                  ? "bg-slate-400"
+                  : section === activeSection
+                    ? "bg-primary"
+                    : "bg-[#34d399]"
             } rounded-full `}
             key={section}
           >

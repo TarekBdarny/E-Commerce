@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useUserContext } from "../../context/UserContext";
 import toast from "react-hot-toast";
-import useUpdateProfile from "../../hooks/useUpdateProfile";
+import useUpdateProfile from "../../hooks/user/useUpdateProfile";
 import LoadingSpinner from "../../daisy/LoadingSpinner";
 
 export const Profile = () => {

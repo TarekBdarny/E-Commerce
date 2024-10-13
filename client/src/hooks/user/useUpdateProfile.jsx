@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useUserContext } from "../context/UserContext";
+import { useUserContext } from "../../context/UserContext";
 import toast from "react-hot-toast";
 
 function useUpdateProfile({ firstName, lastName, username, profilePic }) {
@@ -23,7 +23,7 @@ function useUpdateProfile({ firstName, lastName, username, profilePic }) {
             profilePic,
             id: user?._id,
           }),
-        }
+        },
       );
 
       const data = await res.json();

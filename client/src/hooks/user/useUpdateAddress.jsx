@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
-import { useUserContext } from "../context/UserContext";
+import { useUserContext } from "../../context/UserContext";
 function useUpdateAddress({ data }) {
   const [loading, setLoading] = useState(false);
   const { user, setUser } = useUserContext();
@@ -17,7 +17,7 @@ function useUpdateAddress({ data }) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(data),
-        }
+        },
       );
       const updatedData = await res.json();
       if (!res.ok) {

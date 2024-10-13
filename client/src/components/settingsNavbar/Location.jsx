@@ -4,10 +4,8 @@ import { useUserContext } from "../../context/UserContext";
 import { CiSearch } from "react-icons/ci";
 import { IoIosArrowUp, IoIosArrowDown, IoIosCheckmark } from "react-icons/io";
 import { motion } from "framer-motion";
-import countryToCurrency from "country-to-currency";
 import NavCurrency from "./NavCurrency";
-import { getCode, getCodes } from "country-list";
-import useUpdateCountry from "../../hooks/useUpdateCountry";
+import useUpdateCountry from "../../hooks/user/useUpdateCountry";
 import Modal from "../../daisy/Modal";
 export const Location = () => {
   return (
@@ -68,7 +66,7 @@ const ImageDropdown = () => {
             ))
           : countries
               .filter((country) =>
-                country.name.toLowerCase().includes(inputValue.toLowerCase())
+                country.name.toLowerCase().includes(inputValue.toLowerCase()),
               )
               .map(({ name, flags }) => (
                 <Item

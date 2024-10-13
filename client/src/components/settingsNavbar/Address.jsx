@@ -5,9 +5,8 @@ import { cities } from "country-cities";
 import toast from "react-hot-toast";
 
 import { useUserContext } from "../../context/UserContext";
-import useUpdateAddress from "../../hooks/useUpdateAddress";
+import useUpdateAddress from "../../hooks/user/useUpdateAddress";
 
-import { CiSearch } from "react-icons/ci";
 import LoadingSpinner from "../../daisy/LoadingSpinner";
 
 export const Address = () => {
@@ -20,7 +19,7 @@ export const Address = () => {
   });
   const { updateAddress, loading } = useUpdateAddress({ data });
   const [countryCities, setCountryCities] = useState(
-    cities.getByCountry(getCode(user?.country)) || ""
+    cities.getByCountry(getCode(user?.country)) || "",
   );
 
   const handleClick = (e) => {

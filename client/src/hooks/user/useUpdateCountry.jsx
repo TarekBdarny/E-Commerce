@@ -1,4 +1,4 @@
-import { useUserContext } from "../context/UserContext.jsx";
+import { useUserContext } from "../../context/UserContext.jsx";
 import { toast } from "react-hot-toast";
 function useUpdateCountry({ country, flag }) {
   const { user, setUser } = useUserContext();
@@ -12,7 +12,7 @@ function useUpdateCountry({ country, flag }) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ country, id: user?._id, flag }),
-        }
+        },
       );
       const data = await response.json();
 

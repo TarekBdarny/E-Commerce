@@ -1,5 +1,5 @@
 import React from "react";
-import { useUserContext } from "../context/UserContext";
+import { useUserContext } from "../../context/UserContext";
 import toast from "react-hot-toast";
 
 function useUpdateCurrency({ currency }) {
@@ -14,7 +14,7 @@ function useUpdateCurrency({ currency }) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ currency, id: user?._id }),
-        }
+        },
       );
       const data = await response.json();
 
