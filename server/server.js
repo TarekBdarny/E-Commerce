@@ -4,6 +4,7 @@ import cors from "cors";
 import { authRouter } from "./routes/auth.route.js";
 import connectMongo from "./utils/connectMongo.js";
 import { userRouter } from "./routes/user.route.js";
+import { cardRouter } from "./routes/card.route.js";
 
 const app = express();
 dotenv.config();
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use(cors());
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
+app.use("/api/card", cardRouter);
 
 app.listen(PORT, () => {
   connectMongo();

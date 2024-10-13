@@ -10,17 +10,24 @@ const creditCardSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    cardNumber: {
+    number: {
       type: String,
       required: true,
     },
-    expirationDate: {
+    month: {
       type: String,
       required: true,
     },
-    securityCode: {
+    year: {
       type: String,
       required: true,
+    },
+    cvc: {
+      type: String,
+      required: true,
+    },
+    cardCompany: {
+      type: String,
     },
   },
   {
