@@ -5,6 +5,7 @@ import { Payment } from "./Payment";
 import { Profile } from "./Profile";
 import { Wishlist } from "./Wishlist";
 import { BusinessAccount } from "./BusinessAccount";
+import { CreditCardsDisplay } from "./CreditCardsDisplay";
 
 export {
   Address,
@@ -14,4 +15,5 @@ export {
   Payment,
   Profile,
   Wishlist,
+  CreditCardsDisplay,
 };

@@ -8,7 +8,7 @@ export const useUserContext = () => {
 
 export const UserContextProvider = ({ children }) => {
   const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem("user")) || null
+    JSON.parse(localStorage.getItem("user")) || null,
   );
   return (
     <userContext.Provider value={{ user, setUser }}>

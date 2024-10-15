@@ -1,16 +1,15 @@
 import React from "react";
 import { useUserContext } from "../context/UserContext";
 
-const Modal = ({ func, country = false }) => {
+const Modal = ({ func, activate = false }) => {
   const { user, setUser } = useUserContext();
 
   const handleClick = () => {
     func();
-    // setUser({ ...user, city: "" });
-    // window.localStorage.setItem("user", JSON.stringify({ ...user, city: "" }));
+
     document.getElementById("my_modal_3").close();
   };
-  return (
+  return !activate ? (
     <>
       {/* You can open the modal using document.getElementById('ID').showModal() method */}
       <dialog id="my_modal_3" className="modal z-20">
@@ -38,6 +37,37 @@ const Modal = ({ func, country = false }) => {
               onClick={handleClick}
             >
               Change
+            </button>
+          </div>
+        </div>
+      </dialog>
+    </>
+  ) : (
+    <>
+      {/* You can open the modal using document.getElementById('ID').showModal() method */}
+      <dialog id="my_modal_3" className="modal z-20">
+        <div className="modal-box">
+          <form method="dialog">
+            {/* if there is a button in form, it will close the modal */}
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+              ✕
+            </button>
+          </form>
+          <h3 className="font-bold text-lg">Change Country</h3>
+          <p className="py-4">
+            Enter the credit card cvc number to activate this credit card
+          </p>
+          <div className="w-full relative flex  py-2 items-center justify-between gap-4">
+            <input
+              type="password"
+              className="border outline-none py-2 w-full rounded-lg px-4"
+              autoComplete="off"
+              placeholder="CVC"
+            />
+          </div>
+          <div className="flex justify-end w-full my-4 ">
+            <button className="btn mx-auto w-full bg-primary hover:bg-white hover:text-primary hover:border-2 hover:border-primary transition duration-200 text-white hover:-translate-y-1 ">
+              Activate
             </button>
           </div>
         </div>

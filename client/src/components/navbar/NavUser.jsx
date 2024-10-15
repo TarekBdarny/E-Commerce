@@ -68,7 +68,7 @@ const NavUser = () => {
       onClick={() => setIsOpen(!isOpen)}
     >
       <summary className="btn btn-ghost btn-circle avatar">
-        <div className="w-10 rounded-full">
+        <div className="w-10 rounded-full flex justify-center items-center">
           <img
             alt="user profile"
             src={user?.profilePic || "https://i.pravatar.cc/300"}

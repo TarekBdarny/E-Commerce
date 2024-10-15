@@ -1,5 +1,6 @@
-import creditCardModel from "../db/models/creditCard.model";
+import creditCardModel from "../db/models/creditCard.model.js";
 import userModel from "../db/models/user.model.js";
+import bcrypt from "bcrypt";
 export const createCreditCard = async (req, res) => {
   try {
     const { id } = req.params;
@@ -8,14 +9,17 @@ export const createCreditCard = async (req, res) => {
     const user = await userModel.findById(id);
     if (!user) return res.status(404).json({ message: "User not found" });
 
+    const hashedNumber = await bcrypt.hash(number, 10);
+    const hashedCvc = await bcrypt.hash(cvc, 10);
     const card = new creditCardModel({
       cardOwner: id,
-      number,
+      number: hashedNumber,
       name,
       month,
       year,
-      cvc,
+      cvc: hashedCvc,
       cardCompany,
+      lastFourDigits: number.slice(-4),
     });
     await card.save();
 
@@ -33,8 +37,9 @@ export const getAllCreditCards = async (req, res) => {
     if (!user) return res.status(404).json({ message: "User not found" });
 
     const cards = await creditCardModel.find({ cardOwner: id });
+
     if (cards.length === 0)
-      return res.status(404).json({ message: "No cards found", data: [] });
+      return res.status(200).json({ message: "No cards found", data: [] });
     else {
       return res.status(200).json({ message: "Cards found", data: cards });
     }

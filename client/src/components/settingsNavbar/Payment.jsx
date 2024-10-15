@@ -4,8 +4,13 @@ import {
   isExpirationDateValid,
   isSecurityCodeValid,
   getCreditCardNameByNumber,
+  card,
 } from "creditcard.js";
 import { toast } from "react-hot-toast";
+import { Link } from "react-router-dom";
+import { MdKeyboardDoubleArrowLeft } from "react-icons/md";
+import useCreateCreditCard from "../../hooks/card/useCreateCreditCard";
+
 export const Payment = () => {
   // console.log(isValid("34343434343f"));
   // console.log(getCreditCardNameByNumber("5189540814443434")); // returns 'Visa'
@@ -19,17 +24,48 @@ export const Payment = () => {
     cvc: "",
     cardCompany: "",
   });
+  const { createCreditCard } = useCreateCreditCard({ card });
 
   const handleClick = () => {
     setCard({
       ...card,
       cardCompany: getCreditCardNameByNumber(card.number),
     });
-    console.log(card);
+    if (!checkCardData()) return;
+
+    createCreditCard();
+  };
+  const checkCardData = () => {
+    if (!card.number || !card.name || !card.month || !card.year || !card.cvc) {
+      toast.error("All fields are required");
+      return false;
+    }
+    if (!isValid(card.number)) {
+      toast.error("Invalid card number");
+      return false;
+    }
+    if (!isExpirationDateValid(card.month, card.year)) {
+      toast.error("Invalid expiration date");
+      return false;
+    }
+    if (!isSecurityCodeValid(card.number, card.cvc)) {
+      toast.error("Invalid security code");
+      return false;
+    }
+    return true;
   };
   return (
     <div className=" flex items-center flex-col md:flex-row ">
       <div className="w-full min-h-[30vh] bg-[url('/bg-main-mobile.png')] md:min-h-screen md:w-[35%] md:bg-[url('/bg-main-desktop.png')] bg-cover bg-center relative">
+        <div>
+          <Link
+            to={"/settings/payment"}
+            className="absolute top-4 left-4 text-white p-2 tooltip tooltip-bottom"
+            data-tip="Back"
+          >
+            <MdKeyboardDoubleArrowLeft className="size-8 text-primary-hover rounded-full hover:scale-110" />
+          </Link>
+        </div>
         <div className="absolute flex flex-col-reverse top-[40%]  left-[61%] md:top-[40%] md:left-[70%]  gap-0   md:flex-col md:gap-8  transform -translate-x-1/2 -translate-y-1/2">
           <CardFrontLayout cardData={card} />
           <CardBackLayout cardData={card} />
@@ -49,17 +85,19 @@ export const Payment = () => {
   );
 };
 
-const CardFrontLayout = ({ cardData }) => {
+export const CardFrontLayout = ({ cardData, cardLayout = false }) => {
   return (
-    <div className="relative  transform translate-y-10 -translate-x-[50px] lg:translate-x-[70px] md:translate-x-[50px] lg:w-[300px] w-[280px] z-[100]">
+    <div
+      className={`relative  ${!cardLayout && "transform translate-y-10 -translate-x-[50px] lg:translate-x-[70px] md:translate-x-[50px] z-[100]"} lg:w-[300px] w-[280px] `}
+    >
       <img
         src="/card-logo.svg"
         alt=""
-        className="absolute md:top-4 md:left-4 md:w-[50px]"
+        className="absolute top-4 left-4 w-[30px] md:w-[50px]"
       />
 
       <img
-        src={`/${cardData.cardCompany === "" ? "visa" : cardData.cardCompany}.svg`}
+        src={`/${cardData.cardCompany === "" ? "Visa" : cardData.cardCompany}.svg`}
         alt=""
         className="absolute top-4 right-4 w-[50px]"
       />
@@ -73,7 +111,12 @@ const CardFrontLayout = ({ cardData }) => {
         <h1 className="absolute text-white bottom-20 left-4 tracking-[2px] lg:text-lg">
           {cardData.number === ""
             ? "0000 0000 0000 0000"
-            : cardData.number.replace(/(.{4})/g, "$1 ")}
+            : cardData.number !== "" && cardLayout
+              ? `************${cardData.lastFourDigits}`.replace(
+                  /(.{4})/g,
+                  "$1 ",
+                )
+              : cardData.number.replace(/(.{4})/g, "$1 ")}
         </h1>
         <div className="absolute bottom-8 left-4 right-12 flex text-white justify-between">
           <span>{cardData.name === "" ? "Jane Doe" : cardData.name}</span>
@@ -105,14 +148,14 @@ const CardBackLayout = ({ cardData }) => {
 
 const RightSection = (props) => {
   const { cardData, setData, handleClick } = props;
-
+  const [errMsg, setErrMsg] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
     handleClick();
   };
   const handleNumberInput = (e) => {
     if (e.target.value.length > 16) {
-      toast.error("Card number must be 16 digits long");
+      setErrMsg("Card number must be 16 digits long");
     } else {
       setData((prev) => ({
         ...prev,
@@ -134,12 +177,13 @@ const RightSection = (props) => {
             type="text"
             id="card_name"
             value={cardData.name}
+            autoComplete="off"
             onChange={(e) =>
               setData((prev) => ({ ...prev, name: e.target.value }))
             }
             placeholder="e.g. Jane Appleseed"
             required
-            className="w-full p-2 border border-dark-grayish-violet rounded-md text-lg"
+            className="w-full p-2 border border-dark-grayish-violet rounded-md text-lg outline-none focus:border-primary focus:border-2"
           />
         </div>
 
@@ -157,11 +201,12 @@ const RightSection = (props) => {
             onChange={handleNumberInput}
             placeholder="e.g. 1234 5678 9123 0000"
             required
-            className="w-full p-2 border border-dark-grayish-violet rounded-md text-lg"
+            className="w-full p-2 border border-dark-grayish-violet rounded-md text-lg outline-none focus:border-primary focus:border-2"
           />
+          {errMsg !== "" && <span className="p-2 text-red-500">{errMsg}</span>}
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 w-full gap-4">
           <div>
             <label
               htmlFor="exp_month"
@@ -179,7 +224,7 @@ const RightSection = (props) => {
                 }
                 placeholder="MM"
                 required
-                className="w-16 p-2 border border-dark-grayish-violet rounded-md text-lg"
+                className="w-16 p-2 border border-dark-grayish-violet rounded-md text-lg outline-none focus:border-primary focus:border-2"
               />
               <input
                 type="number"
@@ -190,7 +235,7 @@ const RightSection = (props) => {
                 }
                 placeholder="YY"
                 required
-                className="w-16 p-2 border border-dark-grayish-violet rounded-md text-lg"
+                className="w-16 p-2 border border-dark-grayish-violet rounded-md text-lg outline-none focus:border-primary focus:border-2"
               />
             </div>
           </div>
@@ -211,13 +256,14 @@ const RightSection = (props) => {
               }
               placeholder="e.g. 123"
               required
-              className="w-full p-2 border border-dark-grayish-violet rounded-md text-lg"
+              className="w-full p-2 border border-dark-grayish-violet rounded-md text-lg outline-none focus:border-primary focus:border-2"
             />
           </div>
           <div className="col-span-2">
             <button
               type="submit"
               className="w-full btn  bg-primary hover:text-primary hover:bg-transparent hover:border-primary hover:border-2 hover:-translate-y-1 transition duration-200  text-white rounded-md text-lg "
+              onClick={handleSubmit}
             >
               Add Payment
             </button>

@@ -1,4 +1,5 @@
-import { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
+import useGetCreditCards from "../hooks/card/useGetCreditCards";
 
 export const creditCardsContext = createContext();
 
@@ -7,9 +8,7 @@ export const useCreditCardsContext = () => {
 };
 
 export const CreditCardsContextProvider = ({ children }) => {
-  const [cards, setCards] = useState(
-    JSON.parse(localStorage.getItem("user")) || null,
-  );
+  const [cards, setCards] = useState([]);
   return (
     <creditCardsContext.Provider value={{ cards, setCards }}>
       {children}

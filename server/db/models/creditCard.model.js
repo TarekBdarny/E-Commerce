@@ -29,6 +29,9 @@ const creditCardSchema = new mongoose.Schema(
     cardCompany: {
       type: String,
     },
+    lastFourDigits: {
+      type: String,
+    },
   },
   {
     timestamps: true,

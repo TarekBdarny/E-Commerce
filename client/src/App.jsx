@@ -15,13 +15,15 @@ import {
   BrowsingHistory,
   Payment,
   BusinessAccount,
+  CreditCardsDisplay,
 } from "./components/settingsNavbar/export";
 import { useEffect } from "react";
 import { useUserContext } from "./context/UserContext";
+import useGetCreditCards from "./hooks/card/useGetCreditCards";
 
 function App() {
   const { user } = useUserContext();
-  useEffect(() => {}, [user]);
+
   return (
     <div className="">
       <TestNav />
@@ -32,14 +34,14 @@ function App() {
         <Route path="/register" element={<MainRegister />} />
         <Route path="/login" element={<Login />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/main/create/payment" element={<Payment />} />
+        <Route path="/main/create/card" element={<Payment />} />
         <Route path="/settings" element={<Settings />}>
           <Route path="wishlist" element={<Wishlist />} />
           <Route path="address" element={<Address />} />
           <Route path="profile" element={<Profile />} />
           <Route path="location" element={<Location />} />
           <Route path="history" element={<BrowsingHistory />} />
-          <Route path="payment" element={<Payment />} />
+          <Route path="payment" element={<CreditCardsDisplay />} />
           <Route path="business" element={<BusinessAccount />} />
         </Route>
       </Routes>
