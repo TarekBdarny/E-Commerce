@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { CardFrontLayout } from "./Payment";
 import { useCreditCardsContext } from "../../context/CreditCardsContext";
 import { Link } from "react-router-dom";
@@ -7,14 +7,19 @@ import { FaArrowTrendUp } from "react-icons/fa6";
 import { CiTrash, CiEdit, CiCircleCheck } from "react-icons/ci";
 import CardSkeleton from "../../daisy/CardSkeleton";
 import useGetCreditCards from "../../hooks/card/useGetCreditCards";
+import useActivateCard from "../../hooks/card/useActivateCard";
 import Modal from "../../daisy/Modal";
 export const CreditCardsDisplay = () => {
   const { cards } = useCreditCardsContext();
+  const [id, setId] = useState("");
   const { getCreditCards, loading } = useGetCreditCards();
+  const { loading: l, activateCard } = useActivateCard({ id });
 
   useEffect(() => {
     getCreditCards();
+    console.log();
   }, []);
+
   return (
     <div className="  w-full h-full  flex flex-col ">
       {!loading && (
@@ -37,18 +42,28 @@ export const CreditCardsDisplay = () => {
       ) : (
         <div className="  relative w-[350px] mb-20 flex flex-col gap-4 ">
           {cards.map((card, i) => (
-            <CardLayout key={i} loading={loading}>
+            <CardLayout
+              key={i}
+              loading={loading}
+              activated={card.activated}
+              setId={setId}
+              id={card._id}
+            >
               <CardFrontLayout key={i} cardData={card} cardLayout />
             </CardLayout>
           ))}
         </div>
       )}
-      <Modal func={() => console.log("hello")} activate />
+      <Modal func={activateCard} activate id={id} />
     </div>
   );
 };
 
-const CardLayout = ({ children, loading }) => {
+const CardLayout = ({ children, loading, activated, setId, id }) => {
+  const handleActivateCard = () => {
+    setId(id);
+    document.getElementById("my_modal_3").showModal();
+  };
   return (
     <div className="w-[280px] md:w-[300px] flex flex-col  gap-4 mt-5 mx-5  ">
       {children}
@@ -59,7 +74,8 @@ const CardLayout = ({ children, loading }) => {
             data-tip="Activate card"
           >
             <CiCircleCheck
-              onClick={() => document.getElementById("my_modal_3").showModal()}
+              onClick={handleActivateCard}
+              className={`${activated && "text-green-500"}`}
             />
           </div>
           <div

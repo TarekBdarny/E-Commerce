@@ -97,7 +97,7 @@ export const CardFrontLayout = ({ cardData, cardLayout = false }) => {
       />
 
       <img
-        src={`/${cardData.cardCompany === "" ? "Visa" : cardData.cardCompany}.svg`}
+        src={`/${cardData.cardCompany}.svg`}
         alt=""
         className="absolute top-4 right-4 w-[50px]"
       />

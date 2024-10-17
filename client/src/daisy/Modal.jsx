@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { useUserContext } from "../context/UserContext";
+import { toast } from "react-hot-toast";
+import useValidateCardCvc from "../hooks/card/useCheckCardCvc";
 
-const Modal = ({ func, activate = false }) => {
+const Modal = ({ func, activate = false, id = "" }) => {
+  const [cvcInput, setCvcInput] = useState("");
   const { user, setUser } = useUserContext();
-
-  const handleClick = () => {
-    func();
-
+  const { validateCardCvc } = useValidateCardCvc({
+    cvc: cvcInput,
+    id: id || "",
+  });
+  const handleClick = async () => {
+    const valid = await validateCardCvc();
+    if (activate) {
+      if (cvcInput === "") {
+        toast.error("CVC is required");
+        return;
+      }
+      if (valid) func();
+    }
     document.getElementById("my_modal_3").close();
   };
   return !activate ? (
@@ -53,7 +65,7 @@ const Modal = ({ func, activate = false }) => {
               ✕
             </button>
           </form>
-          <h3 className="font-bold text-lg">Change Country</h3>
+          <h3 className="font-bold text-lg">Activate Credit Card</h3>
           <p className="py-4">
             Enter the credit card cvc number to activate this credit card
           </p>
@@ -63,11 +75,17 @@ const Modal = ({ func, activate = false }) => {
               className="border outline-none py-2 w-full rounded-lg px-4"
               autoComplete="off"
               placeholder="CVC"
+              maxLength={4}
+              value={cvcInput}
+              onChange={(e) => setCvcInput(e.target.value)}
             />
           </div>
           <div className="flex justify-end w-full my-4 ">
-            <button className="btn mx-auto w-full bg-primary hover:bg-white hover:text-primary hover:border-2 hover:border-primary transition duration-200 text-white hover:-translate-y-1 ">
-              Activate
+            <button
+              onClick={handleClick}
+              className="btn mx-auto w-full bg-primary hover:bg-white hover:text-primary hover:border-2 hover:border-primary transition duration-200 text-white hover:-translate-y-1 "
+            >
+              Activate Card
             </button>
           </div>
         </div>

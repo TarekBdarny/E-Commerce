@@ -32,6 +32,10 @@ const creditCardSchema = new mongoose.Schema(
     lastFourDigits: {
       type: String,
     },
+    activated: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
