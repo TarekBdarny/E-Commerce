@@ -9,15 +9,16 @@ import CardSkeleton from "../../daisy/CardSkeleton";
 import useGetCreditCards from "../../hooks/card/useGetCreditCards";
 import useActivateCard from "../../hooks/card/useActivateCard";
 import Modal from "../../daisy/Modal";
+import { useUserContext } from "../../context/UserContext";
 export const CreditCardsDisplay = () => {
   const { cards } = useCreditCardsContext();
   const [id, setId] = useState("");
   const { getCreditCards, loading } = useGetCreditCards();
   const { loading: l, activateCard } = useActivateCard({ id });
+  const { user } = useUserContext();
 
   useEffect(() => {
-    getCreditCards();
-    console.log();
+    if (user) getCreditCards();
   }, []);
 
   return (

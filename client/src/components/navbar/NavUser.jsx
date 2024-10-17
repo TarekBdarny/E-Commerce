@@ -60,8 +60,16 @@ const items = [
 ];
 const NavUser = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [image, setImage] = useState("");
   const { user } = useUserContext();
-
+  // useEffect(() => {
+  //   const fetchImage = async () => {
+  //     const res = await fetch(`https://ui-avatars.com/api/?name=Jhon+Doe`);
+  //     // const data = await res.json();
+  //     setImage(res);
+  //   };
+  //   fetchImage();
+  // }, []);
   return (
     <details
       className="dropdown dropdown-end"
@@ -71,7 +79,8 @@ const NavUser = () => {
         <div className="w-10 rounded-full flex justify-center items-center">
           <img
             alt="user profile"
-            src={user?.profilePic || "https://i.pravatar.cc/300"}
+            // src={"https://avatar.oxro.io/avatar.svg?name=John+Smith&color=000"}
+            src={user?.profilePic || "/test.png"}
           />
         </div>
       </summary>

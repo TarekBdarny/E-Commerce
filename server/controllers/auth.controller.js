@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import userModel from "../db/models/user.model.js";
 import bcrypt from "bcrypt";
+import { promises as fs } from "fs";
+
 // import { generateTokenAndSetCookie } from "../utils/createJWTAndSetCookies.js";
 export const register = async (req, res) => {
   const {
@@ -15,15 +17,29 @@ export const register = async (req, res) => {
   } = req.body;
   console.log("test");
   try {
-    const user = await userModel.findOne({ username });
-    if (user)
-      return res.status(400).json({ message: "username already exists" });
+    const user = await userModel.findOne({
+      $or: [{ username }, { email }],
+    });
+    if (user) return res.status(400).json({ message: "user already exists" });
 
     if (password !== confirmPassword)
       return res.status(400).json({ message: "Passwords do not match" });
 
     const hashedPassword = await bcrypt.hash(password, 10);
-
+    const colors = [
+      "000",
+      "6ab04c",
+      "f39c12 ",
+      "ff6b6b",
+      "68A691",
+      "694F5D",
+      "9fbfc8",
+      "fef65b",
+      "588163",
+    ];
+    let ProfilePicWithInitialsUrl = `https://avatar.oxro.io/avatar.svg?name=${firstName}+${lastName}&background=${
+      colors[Math.floor(Math.random() * colors.length)]
+    }&caps=3&bold=true`;
     const newUser = new userModel({
       username,
       firstName,
@@ -31,7 +47,7 @@ export const register = async (req, res) => {
       email,
       password: hashedPassword,
       gender,
-      profilePic,
+      profilePic: profilePic || ProfilePicWithInitialsUrl,
     });
 
     if (newUser) {
@@ -73,21 +89,17 @@ export const logout = (req, res) => {
     res.status(500).json({ message: "Something went wrong" });
   }
 };
-const convertImageToBase64 = (imageFile) => {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-
-    // Set up the onload event to convert the image
-    reader.onload = () => {
-      resolve(reader.result);
-    };
-
-    // Handle errors
-    reader.onerror = (error) => {
-      reject(error);
-    };
-
-    // Read the image file as a data URL (Base64)
-    reader.readAsDataURL(imageFile);
-  });
+const convertImageToBase64 = async (name) => {
+  const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(
+    name
+  )}&size=128&background=FF5733&color=FFFFFF&rounded=true&bold=true`;
+  try {
+    const response = await fetch(avatarUrl);
+    const arrayBuffer = await response.arrayBuffer(); // Get the avatar as an ArrayBuffer
+    const buffer = Buffer.from(arrayBuffer); // Convert ArrayBuffer to Buffer
+    const base64Image = buffer.toString("base64"); // Convert Buffer to Base64
+    return base64Image;
+  } catch (err) {
+    throw new Error(`Error fetching or converting image: ${err.message}`);
+  }
 };
