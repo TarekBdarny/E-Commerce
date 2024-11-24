@@ -5,7 +5,7 @@ import { CiHeart, CiDiscount1 } from "react-icons/ci";
 
 const Card = () => {
   return (
-    <div className="card   bg-base-100 w-[250px] md:w-[350px] shadow-xl overflow-hidden transition duration-300 ease-in-out">
+    <div className="card px-0  bg-base-100 w-[250px] md:w-[350px] shadow-xl overflow-hidden transition duration-300 ease-in-out">
       {/* go to product page  */}
       <Link>
         <figure className="hover:scale-110 transition duration-300 ease-in-out">

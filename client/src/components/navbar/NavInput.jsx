@@ -46,7 +46,7 @@ const NavInput = () => {
       </label>
       {isSearching && (
         <motion.div
-          className="dropdown dropdown-content  bg-base-100  z-[1] w-[70%] h-[100px] p-2 shadow absolute top-10 search-input"
+          className="dropdown dropdown-content  bg-base-100  z-[1] w-[70%] min-h-[100px] p-2 shadow absolute top-10 search-input"
           transition={{ duration: 0.5 }}
         ></motion.div>
       )}

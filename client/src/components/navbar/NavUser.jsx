@@ -100,8 +100,11 @@ const NavUser = () => {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
           >
-            <Link to="/profile">
-              Hello <span className="text-primary-hover">Tarek</span>
+            <Link to="/settings/profile">
+              Hello{" "}
+              <span className="text-primary-hover">
+                {user.username ? user.username : "Guest"}
+              </span>
             </Link>
           </motion.li>
 

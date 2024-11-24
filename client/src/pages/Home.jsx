@@ -13,6 +13,8 @@ const Home = () => {
       />
       <Carousel />
       <Products />
+      <div className="size-24 bg-[#2563EB]"></div>
+      <div className="size-24 bg-[#9CA3AF]"></div>
     </div>
   );
 };
